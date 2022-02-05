@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "565590911335",
+    "firebase_url": "https://pscc-864d2.firebaseio.com",
+    "project_id": "pscc-864d2",
+    "storage_bucket": "pscc-864d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565590911335:android:1c974cb1e8d800c6bca7c2",
+        "android_client_info": {
+          "package_name": "com.sanlabz.pscc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565590911335-fttrkpr6b0skdriq7dlcuiddvppl5t42.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sanlabz.pscc",
+            "certificate_hash": "2aae99bdb60650f754d5cd9ccd0464f0956cc4b6"
+          }
+        },
+        {
+          "client_id": "565590911335-a7mm8p44orq1bn5pkfpjg9socelfmlop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-o3w5s3ZbkiBJtiGrBHdWwoHMDrIWZak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565590911335-a7mm8p44orq1bn5pkfpjg9socelfmlop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

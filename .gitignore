@@ -1,0 +1,45 @@
+# MISCELLANEOUS
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# INTELLIJ RELATED
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS CODE
+.vscode/
+
+# FLUTTER/DART/PUB RELATED
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+*.g.dart
+
+# WEB RELATED
+lib/generated_plugin_registrant.dart
+
+# SYMBOLICATION RELATED
+app.*.symbols
+
+# OBFUSCATION RELATED
+app.*.map.json
+
+# ANDROID STUDIO WILL PLACE BUILD ARTIFACTS HERE
+/android/app/debug
+/android/app/profile
+/android/app/release
