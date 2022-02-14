@@ -3,7 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:pscc/app/modules/home/home_view.dart';
+import 'package:pscc/app/modules/dashboard/dashboard_view.dart';
 import 'package:pscc/app/shared/controllers/auth_controller.dart';
 import 'package:pscc/app/shared/controllers/auth_enum.dart';
 import 'package:pscc/app/app_pages.dart';
@@ -41,7 +41,7 @@ class SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: 'assets/doctor.png',
-      nextScreen: HomeView(),
+      nextScreen: DashboardView(),
       splashTransition: SplashTransition.rotationTransition,
       pageTransitionType: PageTransitionType.scale,
     );

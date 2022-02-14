@@ -51,7 +51,6 @@ class AuthService {
     try {
       await auth.signOut();
       await google.signOut();
-      return true;
     } catch (e) {
       throw e;
     }

@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-
-import 'package:pscc/app/shared/models/images.dart';
 import 'package:pscc/app/shared/services/util_service.dart';
 
 class Product {
@@ -11,17 +8,15 @@ class Product {
   String order;
   DateTime date;
   double price;
-  List<Images> images;
 
   Product({
-    @optionalTypeArgs this.uid,
-    @optionalTypeArgs this.title,
-    @optionalTypeArgs this.description,
-    @optionalTypeArgs this.category,
-    @optionalTypeArgs this.order,
-    @optionalTypeArgs this.date,
-    @optionalTypeArgs this.price,
-    @optionalTypeArgs this.images,
+    this.uid,
+    this.title,
+    this.description,
+    this.category,
+    this.order,
+    this.date,
+    this.price,
   });
 
   Product.fromMap(String id, Map data) {
@@ -34,7 +29,6 @@ class Product {
         ? DateTime.fromMicrosecondsSinceEpoch(data['date']?.microsecondsSinceEpoch)
         : DateTime.now();
     price = UtilService.stringRealToDouble(data['price']);
-    images = data.containsKey('images') ? Product.getListImages(data['images']) : [];
   }
 
   Map<String, dynamic> toMap() {
@@ -46,16 +40,7 @@ class Product {
       'order': order,
       'date': date,
       'price': price,
-      'images': images,
     };
-  }
-
-  static List<Images> getListImages(List<dynamic> list) {
-    return list.map((e) => new Images(path: e['path'] ?? '', url: e['url'] ?? '')).toList();
-  }
-
-  static String getPresentation(List<Images> list) {
-    return list.isNotEmpty ? list[0].url : '';
   }
 
   static collection() {
