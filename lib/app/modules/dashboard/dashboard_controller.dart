@@ -4,35 +4,39 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 import 'package:pscc/app/app_pages.dart';
 import 'package:pscc/app/shared/controllers/auth_controller.dart';
-
-import 'package:pscc/app/shared/models/product.dart';
+import 'package:pscc/app/shared/models/account.dart';
 import 'package:pscc/app/shared/services/auth_service.dart';
-import 'package:pscc/app/shared/services/product_service.dart';
+import 'package:pscc/app/shared/services/account_service.dart';
 
 class DashboardController extends GetxController {
-  final ProductService products = Get.find();
-  final AuthService authService = Get.find();
   final AuthController authController = Get.find();
+  final AccountService accounts = Get.find();
+  final AuthService authService = Get.find();
   final GetStorage storage = Get.find();
 
   get isPortrait => Get.context.isPortrait;
 
-  final RxList<Product> list = <Product>[].obs;
+  final Rx<Account> account = Rx(Account());
   final RxBool dark = false.obs;
 
   StreamSubscription<ConnectivityResult> subscription;
 
   @override
   void onInit() {
-    super.onInit();
-
-    this.products.selectAll().then((data) => this.list.value = data);
+    this.accounts.selectById(authController.data.value.uid).then((data) {
+      this.account.value = data;
+      print("##########################################################");
+      print(this.account.value);
+    });
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
     this.dark.value = Get.isDarkMode;
     subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult data) {
       this.authService.network = data == ConnectivityResult.none;
     });
+    super.onInit();
   }
 
   @override

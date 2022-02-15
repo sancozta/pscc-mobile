@@ -47,8 +47,11 @@ class DashboardView extends GetView<DashboardController> {
                               color: Colors.blueGrey[900],
                             ),
                           ),
-                          FlutterLogo(
-                            size: 50,
+                          GestureDetector(
+                            onTap: () => controller.logout(),
+                            child: FlutterLogo(
+                              size: 50,
+                            ),
                           ),
                         ],
                       ),
