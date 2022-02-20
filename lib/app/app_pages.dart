@@ -26,6 +26,14 @@ class AppPages {
           LoginBinding(),
         ],
       ),
+      GetPage(
+        name: Routes.HOME,
+        page: () => DashboardView(),
+        bindings: [
+          DashboardBinding(),
+          LoginBinding(),
+        ],
+      ),
     ];
   }
 }

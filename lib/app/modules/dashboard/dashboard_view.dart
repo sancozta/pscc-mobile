@@ -22,6 +22,44 @@ class DashboardView extends GetView<DashboardController> {
           ),
           child: Column(
             children: [
+              Obx(
+                () => Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            controller.authController?.data?.value?.name ?? ' ',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey[900],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              InkWell(
+                                child: controller.dark.value ? Icon(Icons.nights_stay) : Icon(Icons.wb_sunny_rounded),
+                                onTap: () => controller.toogleTheme(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16.0),
+                                child: InkWell(
+                                  child: Icon(Icons.logout),
+                                  onTap: () => controller.logout(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Card(
                 child: Container(
                   padding: EdgeInsets.all(10),
@@ -83,7 +121,7 @@ class DashboardView extends GetView<DashboardController> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('Internet Local'),
+                                  Obx(() => Text(controller.account.value.uid ?? '')),
                                   Text('Text'),
                                   Text('9.999,99'),
                                 ],
