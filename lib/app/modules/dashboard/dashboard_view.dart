@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pscc/app/shared/services/util_service.dart';
 
 import 'dashboard_controller.dart';
 
 class DashboardView extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.green,
-        child: const Icon(
-          Icons.navigation,
-        ),
-      ),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 10,
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: Colors.green,
+          child: const Icon(
+            Icons.navigation,
           ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               Obx(
@@ -97,144 +95,43 @@ class DashboardView extends GetView<DashboardController> {
                   ),
                 ),
               ),
-              Card(
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Saídas do Mês",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey[900],
+              Obx(
+                () => Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Despesas",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey[900],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.account.value.costs?.length ?? 0,
+                          itemBuilder: (_, i) => Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(controller.account.value.costs[i].label),
+                                Text(
+                                  UtilService.numToStr(controller.account.value.costs[i].value),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                      Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Obx(() => Text(controller.account.value.uid ?? '')),
-                                  Text('Text'),
-                                  Text('9.999,99'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Internet Local'),
-                                  Text('Text'),
-                                  Text('9.999,99'),
-                                ],
-                              ),
-                            ),
-                          ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Lista de Desejos",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey[900],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Internet Local'),
-                                  Text('Text'),
-                                  Text('9.999,99'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Internet Local'),
-                                  Text('Text'),
-                                  Text('9.999,99'),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Dinheiro a Receber",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey[900],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Internet Local'),
-                                  Text('Text'),
-                                  Text('9.999,99'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Internet Local'),
-                                  Text('Text'),
-                                  Text('9.999,99'),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

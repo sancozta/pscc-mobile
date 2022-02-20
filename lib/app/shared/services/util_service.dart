@@ -9,10 +9,10 @@ class UtilService {
     return valConvert != '' ? double.parse(valConvert) : 0.0;
   }
 
-  static String doubleToStringReal(double val) {
-    if (val.isNaN || val == null) return 'R\$ 0.00';
+  static String numToStr(double val) {
+    if (val.isNaN || val == null) return '0.00';
     String valConvert = val.toStringAsFixed(2);
-    return 'R\$ $valConvert';
+    return '$valConvert';
   }
 
   static double doublePrecisionTwo(double val) {

@@ -30,7 +30,11 @@ class DashboardController extends GetxController {
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult data) => this.authService.network = data == ConnectivityResult.none);
-    accounts.selectById(authController.data.value.uid).then((data) => this.account.value = data);
+    print("USER ==========> ${authController.data.value.uid}");
+    accounts.selectById(authController.data.value.uid).then((data) {
+      account.value = data;
+      print("DATA ==========> ${account.value.costs}");
+    });
     super.onInit();
   }
 
@@ -52,6 +56,5 @@ class DashboardController extends GetxController {
   void toogleTheme() {
     this.dark.value = !this.dark.value;
     Get.changeThemeMode(this.dark.value ? ThemeMode.dark : ThemeMode.light);
-    storage.write('dark', this.dark.value);
   }
 }
