@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:pscc/app/shared/services/util_service.dart';
-
 import 'dashboard_controller.dart';
 
 class DashboardView extends GetView<DashboardController> {
@@ -9,12 +9,30 @@ class DashboardView extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+        floatingActionButton: SpeedDial(
           backgroundColor: Colors.green,
-          child: const Icon(
-            Icons.navigation,
-          ),
+          icon: Icons.add,
+          activeIcon: Icons.close,
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.attach_money_rounded),
+              backgroundColor: Colors.red,
+              label: 'Despesa do Mês',
+              onTap: () => controller.addCosts(),
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.add_shopping_cart_rounded),
+              backgroundColor: Colors.blue,
+              label: 'Objetivo de Compra',
+              onTap: () => controller.addWishes(),
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.people_alt_rounded),
+              backgroundColor: Colors.green,
+              label: 'Dinheiro A Receber',
+              onTap: () => controller.addReceivable(),
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -30,7 +48,7 @@ class DashboardView extends GetView<DashboardController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            controller.authController?.data?.value?.name ?? ' ',
+                            controller.authController?.data?.value?.name?.toUpperCase() ?? '',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -61,35 +79,40 @@ class DashboardView extends GetView<DashboardController> {
               Card(
                 child: Container(
                   padding: EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Gestão de Gastos",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueGrey[900],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'R\$ 99.999,00',
+                            "Gestão de Gastos",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey[900],
+                            ),
+                          ),
+                          Text(
+                            UtilService.numToStrReal(controller.getTotal()),
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                               color: Colors.blueGrey[900],
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () => controller.logout(),
-                            child: FlutterLogo(
-                              size: 50,
-                            ),
-                          ),
                         ],
+                      ),
+                      Container(
+                        alignment: Alignment.topCenter,
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/budget.png"),
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -116,15 +139,113 @@ class DashboardView extends GetView<DashboardController> {
                         ListView.builder(
                           shrinkWrap: true,
                           itemCount: controller.account.value.costs?.length ?? 0,
+                          itemBuilder: (_, i) => GestureDetector(
+                            onLongPress: () => controller.deleteCosts(),
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      controller.account.value.costs[i].label.toUpperCase(),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Text(
+                                    UtilService.numToStr(controller.account.value.costs[i].value),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Obx(
+                () => Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Lista de Desejo",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey[900],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.account.value.wishes?.length ?? 0,
                           itemBuilder: (_, i) => Container(
                             margin: const EdgeInsets.only(bottom: 5),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(controller.account.value.costs[i].label),
+                                Flexible(
+                                  child: Text(
+                                    controller.account.value.wishes[i].label.toUpperCase(),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
                                 Text(
-                                  UtilService.numToStr(controller.account.value.costs[i].value),
+                                  UtilService.numToStr(controller.account.value.wishes[i].value),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Obx(
+                () => Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Dinheiro A Receber",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey[900],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: controller.account.value.receivable?.length ?? 0,
+                          itemBuilder: (_, i) => Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    controller.account.value.receivable[i].label.toUpperCase(),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  UtilService.numToStr(controller.account.value.receivable[i].value),
                                 ),
                               ],
                             ),

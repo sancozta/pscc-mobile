@@ -22,6 +22,9 @@ class DashboardController extends GetxController {
   final Rx<Account> account = Rx(Account());
   final RxBool dark = false.obs;
 
+  final label = TextEditingController();
+  final value = TextEditingController();
+
   StreamSubscription<ConnectivityResult> subscription;
 
   @override
@@ -30,11 +33,7 @@ class DashboardController extends GetxController {
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult data) => this.authService.network = data == ConnectivityResult.none);
-    print("USER ==========> ${authController.data.value.uid}");
-    accounts.selectById(authController.data.value.uid).then((data) {
-      account.value = data;
-      print("DATA ==========> ${account.value.costs}");
-    });
+    accounts.selectById(authController.data.value.uid).then((data) => account.value = data);
     super.onInit();
   }
 
@@ -56,5 +55,122 @@ class DashboardController extends GetxController {
   void toogleTheme() {
     this.dark.value = !this.dark.value;
     Get.changeThemeMode(this.dark.value ? ThemeMode.dark : ThemeMode.light);
+  }
+
+  Future addCosts() async {
+    await Get.dialog(
+      AlertDialog(
+        titlePadding: const EdgeInsets.only(top: 20, bottom: 10, left: 14, right: 14),
+        title: Text(
+          'Adicionar Despesa',
+          textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 20),
+        ),
+        contentPadding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 6),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                controller: label,
+                onChanged: (v) => label.text = v,
+                style: TextStyle(fontSize: 18),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Escreva algo...',
+                  labelText: 'Descrição',
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextFormField(
+                controller: value,
+                onChanged: (v) => value.text = v,
+                style: TextStyle(fontSize: 18),
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Digite o Valor...',
+                  labelText: 'Valor',
+                ),
+              ),
+            ],
+          ),
+        ),
+        buttonPadding: const EdgeInsets.only(top: 0, left: 14, right: 14),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              OutlinedButton(
+                child: Text('Cancelar'),
+                onPressed: () => Navigator.of(Get.context).pop(),
+              ),
+              OutlinedButton(
+                child: Text('Adicionar'),
+                onPressed: () {
+                  account.value.costs.add(LabelValue(label: label.text, value: 0.0 + double.parse(value.text)));
+                  cleanLabelValue();
+                  Navigator.of(Get.context).pop();
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void addWishes() {}
+
+  void addReceivable() {}
+
+  void cleanLabelValue() {
+    label.text = '';
+    value.text = '';
+  }
+
+  Future deleteCosts() async {
+    await Get.dialog(
+      AlertDialog(
+        titlePadding: const EdgeInsets.only(top: 20, bottom: 10, left: 14, right: 14),
+        title: Text(
+          'Deletar Despesa',
+          textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 20),
+        ),
+        contentPadding: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 6),
+        content: Text(
+          'Gerar texto do item selecionado...',
+          textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 14),
+        ),
+        buttonPadding: const EdgeInsets.only(top: 0, left: 14, right: 14),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              OutlinedButton(
+                child: Text('Cancelar'),
+                onPressed: () => Navigator.of(Get.context).pop(),
+              ),
+              OutlinedButton(
+                child: Text('Adicionar'),
+                onPressed: () {
+                  account.value.costs.add(LabelValue(label: label.text, value: 0.0 + double.parse(value.text)));
+                  cleanLabelValue();
+                  Navigator.of(Get.context).pop();
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  double getTotal() {
+    if (account.value.costs == null || account.value.costs.length == 0) return 0.0;
+    return account.value.costs.map((v) => v.value).toList().reduce((value, element) => (value + element));
   }
 }

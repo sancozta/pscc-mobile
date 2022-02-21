@@ -15,6 +15,12 @@ class UtilService {
     return '$valConvert';
   }
 
+  static String numToStrReal(double val) {
+    if (val.isNaN || val == null) return 'R\$ 0.00';
+    String valConvert = val.toStringAsFixed(2);
+    return 'R\$ $valConvert';
+  }
+
   static double doublePrecisionTwo(double val) {
     String step1 = val.toStringAsFixed(2);
     return double.parse(step1);
