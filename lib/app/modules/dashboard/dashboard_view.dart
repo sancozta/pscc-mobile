@@ -272,7 +272,10 @@ class DashboardView extends GetView<DashboardController> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  UtilService.numToStr(controller.account.value.costs![i].value),
+                                                  UtilService.numToStrReal(
+                                                    controller.account.value.costs![i].value,
+                                                    sufix: '',
+                                                  ),
                                                   style: TextStyle(color: context.theme.primaryColor),
                                                 ),
                                               ],
@@ -374,7 +377,10 @@ class DashboardView extends GetView<DashboardController> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  UtilService.numToStr(controller.account.value.wishes![i].value),
+                                                  UtilService.numToStrReal(
+                                                    controller.account.value.wishes![i].value,
+                                                    sufix: '',
+                                                  ),
                                                   style: TextStyle(color: context.theme.primaryColor),
                                                 ),
                                               ],
@@ -476,7 +482,10 @@ class DashboardView extends GetView<DashboardController> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  UtilService.numToStr(controller.account.value.receivable![i].value),
+                                                  UtilService.numToStrReal(
+                                                    controller.account.value.receivable![i].value,
+                                                    sufix: '',
+                                                  ),
                                                   style: TextStyle(color: context.theme.primaryColor),
                                                 ),
                                               ],

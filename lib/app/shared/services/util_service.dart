@@ -8,16 +8,10 @@ class UtilService {
     return valConvert != '' ? double.parse(valConvert) : 0.0;
   }
 
-  static String numToStr(double val) {
-    if (val.isNaN) return '0.00';
-    String valConvert = val.toStringAsFixed(2);
-    return valConvert;
-  }
-
   static String numToStrReal(double val, {String sufix = 'R\$'}) {
+    final reg = NumberFormat.currency(locale: 'pt_BR', symbol: sufix);
     if (val.isNaN) return '$sufix 0.00';
-    String valConvert = val.toStringAsFixed(2);
-    return '$sufix $valConvert';
+    return reg.format(double.parse(val.toStringAsFixed(2)));
   }
 
   static double doublePrecisionTwo(double val) {
