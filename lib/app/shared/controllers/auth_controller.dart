@@ -13,7 +13,7 @@ class AuthController extends GetxController {
   final AuthService auth = Get.find();
   final MessagingService messaging = Get.find();
 
-  Rx<AuthEnum> status = AuthEnum.LOGOFF.obs;
+  Rx<AuthEnum> status = AuthEnum.logoff.obs;
   Rx<UserLocal> data = UserLocal().obs;
   RxBool registrationCompleted = true.obs;
 
@@ -24,8 +24,8 @@ class AuthController extends GetxController {
 
   Future initDynamicLinks() async {
     FirebaseDynamicLinks.instance.onLink(
-      onSuccess: (PendingDynamicLinkData dynamicLink) async {
-        final Uri deepLink = dynamicLink.link;
+      onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+        final Uri? deepLink = dynamicLink!.link;
 
         if (deepLink != null) {
           printInfo(info: deepLink.path);
@@ -36,34 +36,34 @@ class AuthController extends GetxController {
       },
     );
 
-    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
 
     if (data != null) {
-      final Uri deepLink = data?.link;
-      printInfo(info: deepLink?.path);
+      final Uri? deepLink = data.link;
+      printInfo(info: deepLink!.path);
     }
   }
 
-  Future userLoggedMarked(User user) async {
+  Future userLoggedMarked(User? user) async {
     if (user != null && user.uid.isNotEmpty) {
-      status.value = user.uid.isEmpty ? AuthEnum.LOGOFF : AuthEnum.LOGIN;
+      status.value = user.uid.isEmpty ? AuthEnum.logoff : AuthEnum.login;
 
       if (user.uid.isNotEmpty) {
         await registerOrUpdateUser(user);
       } else {
-        print('Usuário não Identificado!');
+        printInfo(info: 'Usuário não Identificado!');
       }
     }
   }
 
   Future registerOrUpdateUser(User user) async {
     messaging.initFirebaseListeners();
-    String token = await messaging.getTokenUserCurrent();
+    String? token = await messaging.getTokenUserCurrent();
 
     await auth.selectUser(user.uid).then((doc) async {
       data.value = doc;
 
-      if (data.value.uid.isNotEmpty) {
+      if (data.value.uid!.isNotEmpty) {
         data.value.token = token;
         await auth.updateUser(data.value);
       } else {
@@ -86,9 +86,9 @@ class AuthController extends GetxController {
   }
 
   Future createWithEmailAndPassword(UserLocal data, String password) async {
-    await auth.insertUserEmailPassword(data.email, password).then((userCreated) {
+    await auth.insertUserEmailPassword(data.email ?? '', password).then((userCreated) {
       if (userCreated.user != null) {
-        data.uid = userCreated.user.uid;
+        data.uid = userCreated.user!.uid;
         auth.insertUser(data);
       }
     }).catchError((e) {
@@ -107,7 +107,7 @@ class AuthController extends GetxController {
   Future loginWithGoogle() async {
     await auth.getGoogleLogin().then((u) async {
       await userLoggedMarked(u);
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.home);
     }).catchError((e) {
       HandlerErrorService.showMsgError(e);
     });

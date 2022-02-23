@@ -1,5 +1,5 @@
 enum AuthEnum {
-  LOADING,
-  LOGIN,
-  LOGOFF,
+  loading,
+  login,
+  logoff,
 }

@@ -26,6 +26,6 @@ void main() {
 
     Get.changeThemeMode(Get.find<GetStorage>().read<bool>('dark') == true ? ThemeMode.dark : ThemeMode.light);
 
-    runApp(App());
+    runApp(const App());
   });
 }

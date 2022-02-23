@@ -9,60 +9,61 @@ class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore database = FirebaseFirestore.instance;
 
-  bool network;
+  late bool network;
 
-  Future<User> getGoogleLogin() async {
+  Future<User?> getGoogleLogin() async {
     try {
-      final GoogleSignInAccount googleUser = await google.signIn();
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAccount? googleUser = await google.signIn();
+      final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
       final UserCredential userResult = await auth.signInWithCredential(credential);
-      final User user = userResult.user;
+      final User? user = userResult.user;
       return user;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
   Future<String> getToken() async {
     try {
-      String token;
-      await getUserFire().getIdToken().then((data) {
+      String token = '';
+      await getUserFire()?.getIdToken().then((data) {
         token = data;
       });
       return token;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
-  User getUserFire() {
+  User? getUserFire() {
     try {
       return FirebaseAuth.instance.currentUser;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
-  Future getLogout() async {
+  Future<bool> getLogout() async {
     try {
       await auth.signOut();
       await google.signOut();
+      return true;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
-  Future<User> selectUserEmailPassword(String email, String password) async {
+  Future<User?> selectUserEmailPassword(String email, String password) async {
     try {
       final UserCredential userResult = await auth.signInWithEmailAndPassword(email: email, password: password);
-      final User user = userResult.user;
+      final User? user = userResult.user;
       return user;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -70,7 +71,7 @@ class AuthService {
     try {
       return await auth.createUserWithEmailAndPassword(email: email, password: password);
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -82,7 +83,7 @@ class AuthService {
     try {
       return database.collection(UserLocal.collection()).doc(data.uid).set(data.toMap());
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -90,17 +91,17 @@ class AuthService {
     try {
       return database.collection(UserLocal.collection()).doc(data.uid).update(data.toMap());
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
   Future<UserLocal> selectUser(String uid) {
     try {
       return database.collection(UserLocal.collection()).doc(uid).get().then((d) async {
-        return UserLocal.fromMap(d.id, d.data());
+        return UserLocal.fromMap(d.id, d.data() ?? {});
       });
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -110,7 +111,7 @@ class AuthService {
         return d.docs.map((u) => UserLocal.fromMap(u.id, u.data())).toList();
       });
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -118,7 +119,7 @@ class AuthService {
     try {
       return database.collection(UserLocal.collection()).doc(uid).delete();
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -132,12 +133,12 @@ class AuthService {
           )
           .get()
           .then((d) async {
-        if (d.docs.length > 0) {
+        if (d.docs.isNotEmpty) {
           if (ignoreCpfUserLogged) {
-            User userLogged = FirebaseAuth.instance.currentUser;
+            User? userLogged = FirebaseAuth.instance.currentUser;
             bool cpfOfUserLogged = false;
             d.docs.asMap().forEach((i, a) {
-              if (a.id == userLogged.uid) {
+              if (a.id == userLogged!.uid) {
                 cpfOfUserLogged = true;
               }
             });
@@ -150,7 +151,7 @@ class AuthService {
       });
       return exist;
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -160,17 +161,17 @@ class AuthService {
         return d.docs.map((u) => UserLocal.fromMap(u.id, u.data())).toList();
       });
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
   Future<Contact> getContacts() {
     try {
       return database.collection('info').doc('contacts').get().then((d) {
-        return Contact.fromMap(d.data());
+        return Contact.fromMap(d.data() ?? {});
       });
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

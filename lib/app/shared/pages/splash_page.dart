@@ -9,7 +9,7 @@ import 'package:pscc/app/shared/controllers/auth_enum.dart';
 import 'package:pscc/app/app_pages.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key key}) : super(key: key);
+  const SplashPage({required Key key}) : super(key: key);
 
   @override
   SplashPageState createState() => SplashPageState();
@@ -21,13 +21,13 @@ class SplashPageState extends State<SplashPage> {
     super.initState();
     final AuthController auth = Get.find();
 
-    if (auth.status.value == AuthEnum.LOGIN) {
+    if (auth.status.value == AuthEnum.login) {
       Future.delayed(const Duration(milliseconds: 1000), () {
-        Get.offAllNamed(Routes.HOME);
+        Get.offAllNamed(Routes.home);
       });
-    } else if (auth.status.value == AuthEnum.LOGOFF) {
+    } else if (auth.status.value == AuthEnum.logoff) {
       Future.delayed(const Duration(milliseconds: 1000), () {
-        Get.offAllNamed(Routes.LOGIN);
+        Get.offAllNamed(Routes.login);
       });
     }
   }
@@ -41,7 +41,7 @@ class SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: 'assets/doctor.png',
-      nextScreen: DashboardView(),
+      nextScreen: const DashboardView(),
       splashTransition: SplashTransition.rotationTransition,
       pageTransitionType: PageTransitionType.scale,
     );

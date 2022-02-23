@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:pscc/app/modules/login/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
+  const LoginView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,8 +17,8 @@ class LoginView extends GetView<LoginController> {
             Container(
               alignment: Alignment.topCenter,
               height: 35,
-              margin: EdgeInsets.only(bottom: 30, top: 75),
-              decoration: BoxDecoration(
+              margin: const EdgeInsets.only(bottom: 30, top: 75),
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                     "assets/star.png",
@@ -28,7 +30,7 @@ class LoginView extends GetView<LoginController> {
             Padding(
               padding: const EdgeInsets.only(left: 55, right: 55),
               child: Text(
-                "Estrutura Base Para Outros Aplicativos",
+                "Gerenciamento de Gastos e Objetivos Financeiros",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.blueGrey[700],
@@ -40,7 +42,7 @@ class LoginView extends GetView<LoginController> {
             Padding(
               padding: const EdgeInsets.only(left: 75, right: 75, top: 20, bottom: 20),
               child: Text(
-                "Funcionalidades padrão em aplicativos de pequeno e médio porte",
+                "Organize suas despesas, seus desejos de compra e o dinheiro que você tem a receber",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.green[400],
@@ -49,24 +51,16 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
             ),
-            Obx(
-              () => AnimatedOpacity(
-                opacity: controller.opacityLevel.value,
-                duration: Duration(
-                  seconds: 3,
-                ),
-                child: Container(
-                  alignment: Alignment.topCenter,
-                  height: 240,
-                  margin: EdgeInsets.only(bottom: 40, top: 30),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        "assets/poeple.png",
-                      ),
-                      fit: BoxFit.fitHeight,
-                    ),
+            Container(
+              alignment: Alignment.topCenter,
+              height: 240,
+              margin: const EdgeInsets.only(bottom: 40, top: 30),
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    "assets/login.png",
                   ),
+                  fit: BoxFit.fitHeight,
                 ),
               ),
             ),
@@ -76,15 +70,15 @@ class LoginView extends GetView<LoginController> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
-                  gradient: LinearGradient(
-                    colors: <Color>[
+                  gradient: const LinearGradient(
+                    colors: [
                       Color.fromRGBO(123, 228, 149, 1),
                       Color.fromRGBO(50, 157, 156, 1),
                     ],
                   ),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
-                      color: Colors.grey[500],
+                      color: Color.fromARGB(255, 158, 158, 158),
                       offset: Offset(0.0, 1.5),
                       blurRadius: 2,
                     ),
@@ -94,9 +88,9 @@ class LoginView extends GetView<LoginController> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () => controller.authController.loginWithGoogle(),
-                    child: Center(
+                    child: const Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: EdgeInsets.all(12.0),
                         child: Text(
                           "Entrar",
                           style: TextStyle(
@@ -108,18 +102,6 @@ class LoginView extends GetView<LoginController> {
                       ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 75, right: 75, top: 20, bottom: 20),
-              child: Text(
-                "Continuar sem realizar login? Pular",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.green[400],
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),

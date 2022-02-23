@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:share/share.dart';
 
 class UtilService {
   static double stringRealToDouble(String val) {
@@ -10,15 +9,15 @@ class UtilService {
   }
 
   static String numToStr(double val) {
-    if (val.isNaN || val == null) return '0.00';
+    if (val.isNaN) return '0.00';
     String valConvert = val.toStringAsFixed(2);
-    return '$valConvert';
+    return valConvert;
   }
 
-  static String numToStrReal(double val) {
-    if (val.isNaN || val == null) return 'R\$ 0.00';
+  static String numToStrReal(double val, {String sufix = 'R\$'}) {
+    if (val.isNaN) return '$sufix 0.00';
     String valConvert = val.toStringAsFixed(2);
-    return 'R\$ $valConvert';
+    return '$sufix $valConvert';
   }
 
   static double doublePrecisionTwo(double val) {
@@ -42,28 +41,8 @@ class UtilService {
     return val > 0 ? true : false;
   }
 
-  static String getTextWordUpper(String strg) {
-    if (strg == null) {
-      return '';
-    } else {
-      String s = strg.toLowerCase();
-      List<String> sa = s.split(' ');
-      String sf = '';
-      sa.forEach((x) {
-        if (x.length > 1) {
-          sf += '${x[0].toUpperCase()}${x.substring(1)} ';
-        } else {
-          sf += '${x[0].toUpperCase()} ';
-        }
-      });
-      return sf.trim();
-    }
-  }
-
   static String getTextLimit(String strg, int limit) {
-    if (strg == null) {
-      return '';
-    } else if (strg.length > limit) {
+    if (strg.length > limit) {
       return '${strg.substring(0, limit)}...';
     } else {
       return strg;
@@ -89,7 +68,7 @@ class UtilService {
           ),
           actions: [
             TextButton(
-              child: Text('Ok'),
+              child: const Text('Ok'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -100,20 +79,8 @@ class UtilService {
     );
   }
 
-  static share(BuildContext context, String description) {
-    final RenderBox box = context.findRenderObject();
-
-    Share.share(
-      description,
-      subject: description,
-      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
-    );
-  }
-
   static getFcmServeKey() {
-    const String FCM_SERVER_KEY =
-        'key=AAAAg6_YaWc:APA91bGqeUv_CoQY0rfOAYyHAgKqgnR1gIohKtJzu0z7dL4wiCkrbbv3UjeKPJOgoXPMis6DoQmZD6Ln0tKFajoTWf8R0PRi41KzzWAjwIXmWTH5GKSe-R4HGcWqyjlmPvqM21hYPSfW';
-    return FCM_SERVER_KEY;
+    return 'key=AAAAg6_YaWc:APA91bGqeUv_CoQY0rfOAYyHAgKqgnR1gIohKtJzu0z7dL4wiCkrbbv3UjeKPJOgoXPMis6DoQmZD6Ln0tKFajoTWf8R0PRi41KzzWAjwIXmWTH5GKSe-R4HGcWqyjlmPvqM21hYPSfW';
   }
 
   static showMsg(String message) {
@@ -121,10 +88,10 @@ class UtilService {
       message,
       position: ToastPosition.bottom,
       backgroundColor: Colors.black45,
-      textPadding: EdgeInsets.only(top: 6, bottom: 6, right: 8, left: 8),
+      textPadding: const EdgeInsets.only(top: 6, bottom: 6, right: 8, left: 8),
       radius: 10.0,
-      textStyle: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400),
-      animationBuilder: Miui10AnimBuilder(),
+      textStyle: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400),
+      animationBuilder: const Miui10AnimBuilder(),
     );
   }
 }

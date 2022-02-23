@@ -4,13 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AccountService {
   final FirebaseFirestore database = FirebaseFirestore.instance;
 
-  Future<Account> selectById(String uid) {
+  Future<Account> selectById(String? uid) {
     try {
       return database.collection(Account.collection()).doc(uid).get().then((d) async {
-        return Account.fromMap(d.id, d.data());
+        return Account.fromMap(d.id, d.data() ?? {});
       });
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -18,7 +18,7 @@ class AccountService {
     try {
       return database.collection(Account.collection()).doc(data.uid).set(data.toMap());
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -26,7 +26,7 @@ class AccountService {
     try {
       return database.collection(Account.collection()).doc(data.uid).update(data.toMap());
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -34,7 +34,7 @@ class AccountService {
     try {
       return database.collection(Account.collection()).doc(uid).delete();
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 }

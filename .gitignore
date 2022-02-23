@@ -14,8 +14,6 @@
 *.ipr
 *.iws
 .idea/
-
-# VS CODE
 .vscode/
 
 # FLUTTER/DART/PUB RELATED
@@ -28,7 +26,6 @@
 .pub-cache/
 .pub/
 /build/
-*.g.dart
 
 # WEB RELATED
 lib/generated_plugin_registrant.dart

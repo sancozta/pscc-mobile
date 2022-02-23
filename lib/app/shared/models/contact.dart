@@ -1,12 +1,12 @@
 class Contact {
-  String address;
-  String email;
-  String phone;
-  String facebook;
-  String instagram;
-  String twitter;
-  String youtube;
-  String link;
+  String? address = '';
+  String? email = '';
+  String? phone = '';
+  String? facebook = '';
+  String? instagram = '';
+  String? twitter = '';
+  String? youtube = '';
+  String? link = '';
 
   Contact({
     this.address,

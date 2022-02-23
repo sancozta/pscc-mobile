@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "565590911335-eq7igcjs3ktj4vkg2g244ahtafibs5n2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sanlabz.pscc",
+            "certificate_hash": "c8325bfbe53eb5b79a550dabce36f98fe9e721cb"
+          }
+        },
+        {
           "client_id": "565590911335-fttrkpr6b0skdriq7dlcuiddvppl5t42.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

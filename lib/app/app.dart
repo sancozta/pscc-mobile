@@ -7,28 +7,32 @@ import 'package:pscc/app/app_pages.dart';
 import 'package:pscc/app/shared/controllers/auth_binding.dart';
 
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return OKToast(
       animationCurve: Curves.easeIn,
-      animationBuilder: Miui10AnimBuilder(),
-      animationDuration: Duration(milliseconds: 200),
-      duration: Duration(seconds: 4),
+      animationBuilder: const Miui10AnimBuilder(),
+      animationDuration: const Duration(milliseconds: 200),
+      duration: const Duration(seconds: 4),
       child: GetMaterialApp(
         initialBinding: AuthBinding(),
         debugShowCheckedModeBanner: false,
         title: 'Application',
-        initialRoute: AppPages.INITIAL,
-        getPages: AppPages().routes,
+        initialRoute: Routes.login,
+        getPages: AppPages.getRoutes(),
         theme: ThemeData.light().copyWith(
           textTheme: GoogleFonts.montserratTextTheme(
             Theme.of(context).textTheme,
           ),
+          primaryColor: Colors.blueGrey[900],
         ),
         darkTheme: ThemeData.dark().copyWith(
           textTheme: GoogleFonts.montserratTextTheme(
             Theme.of(context).textTheme,
           ),
+          primaryColor: Colors.white70,
         ),
       ),
     );

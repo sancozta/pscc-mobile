@@ -11,29 +11,28 @@ import 'package:pscc/app/shared/services/auth_service.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.LOGIN;
-  List<GetPage> routes;
-
-  AppPages() {
+  static getRoutes() {
     final AuthService auth = Get.find();
 
-    routes = [
+    List<GetPage> routes = [
       GetPage(
-        name: Routes.LOGIN,
-        page: () => auth.getUserFire() == null ? LoginView() : DashboardView(),
+        name: Routes.login,
+        page: () => auth.getUserFire() == null ? const LoginView() : const DashboardView(),
         bindings: [
           DashboardBinding(),
           LoginBinding(),
         ],
       ),
       GetPage(
-        name: Routes.HOME,
-        page: () => DashboardView(),
+        name: Routes.home,
+        page: () => const DashboardView(),
         bindings: [
           DashboardBinding(),
           LoginBinding(),
         ],
       ),
     ];
+
+    return routes;
   }
 }
