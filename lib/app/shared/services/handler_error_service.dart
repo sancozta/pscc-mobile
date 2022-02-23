@@ -89,7 +89,7 @@ class HandlerErrorService {
     } else if (e is ProcessException) {
       return e.message.toString().toUpperCase();
     } else {
-      debugPrint(e);
+      debugPrintStack(label: "ERROR_UNKNOWN => ${e.toString()}");
       return 'ERROR_UNKNOWN';
     }
   }

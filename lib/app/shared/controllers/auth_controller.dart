@@ -61,9 +61,8 @@ class AuthController extends GetxController {
     String? token = await messaging.getTokenUserCurrent();
 
     await auth.selectUser(user.uid).then((doc) async {
-      data.value = doc;
-
-      if (data.value.uid!.isNotEmpty) {
+      if (doc != null && doc.uid!.isNotEmpty) {
+        data.value = doc;
         data.value.token = token;
         await auth.updateUser(data.value);
       } else {

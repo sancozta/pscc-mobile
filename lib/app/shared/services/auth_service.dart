@@ -95,10 +95,14 @@ class AuthService {
     }
   }
 
-  Future<UserLocal> selectUser(String uid) {
+  Future<UserLocal?> selectUser(String uid) {
     try {
       return database.collection(UserLocal.collection()).doc(uid).get().then((d) async {
-        return UserLocal.fromMap(d.id, d.data() ?? {});
+        if (d.data() != null) {
+          return UserLocal.fromMap(d.id, d.data() ?? {});
+        } else {
+          return null;
+        }
       });
     } catch (e) {
       rethrow;
