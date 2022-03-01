@@ -77,7 +77,8 @@ class AuthController extends GetxController {
         await auth.insertUser(data.value);
       }
 
-      registrationCompleted.value = data.value.isRegistrationCompleted();
+      registrationCompleted.value = true;
+      // registrationCompleted.value = data.value.isRegistrationCompleted();
     }).catchError((e) {
       registrationCompleted.value = false;
       HandlerErrorService.showMsgError(e);

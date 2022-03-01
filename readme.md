@@ -74,6 +74,7 @@
 - Listar SHA1 Release
 
       project\android\gradlew.bat signingReport
+      keytool -list -v -alias upload -keystore ~/upload-keystore.jks
 
 ### Gerando os Icones
 
